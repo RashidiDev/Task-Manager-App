@@ -12,44 +12,72 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useTaskDB } from "@/context/TaskDBContext";
 
-import { type JSX } from "react";
+import { type JSX, useRef, useState } from "react";
+import { useFormStatus } from "react-dom";
 
 function AddTaskDialog({ children }: { children: JSX.Element }) {
+  const tasksDb = useTaskDB();
+  const { pending } = useFormStatus();
+  const [error, setError] = useState<string | null>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  function addTask(formData: FormData) {
+    const name = formData.get("name")?.toString().trim();
+    const description = formData.get("description")?.toString().trim();
+
+    if (!name) {
+      setError("Task name is required");
+      return;
+    }
+
+    tasksDb?.addTask({ name, description }).catch(() => {
+      setError("Failed to add task");
+      return;
+    });
+
+    setError(null);
+
+    closeRef.current?.click();
+  }
   return (
     <Dialog>
-      <form>
-        <DialogTrigger asChild>{children}</DialogTrigger>
-
-        <DialogContent className="sm:max-w-sm">
-          <DialogHeader>
-            <DialogTitle>Add new Task</DialogTitle>
-            <DialogDescription>
-              Create new tasks to keep track of them easily!
-            </DialogDescription>
-          </DialogHeader>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="sm:max-w-sm">
+        <DialogHeader>
+          <DialogTitle>Add new Task</DialogTitle>
+          <DialogDescription>
+            Create new tasks to keep track of them easily!
+          </DialogDescription>
+        </DialogHeader>
+        <form action={addTask}>
           <FieldGroup>
+            {error && <div className="text-sm text-red-500">{error}</div>}
             <Field>
               <Label htmlFor="name">Task Name</Label>
-              <Input id="name" name="name" placeholder="Do homework" />
+              <Input id="name" name="name" placeholder="Do homework" required />
             </Field>
             <Field>
               <Label htmlFor="description">Task Description</Label>
               <Input
                 id="description"
-                name="username"
+                name="description"
                 placeholder="Finish english class homework for tomorrow."
               />
             </Field>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" disabled={pending}>
+                {pending ? "Adding Task" : "Add Task"}
+              </Button>
+            </DialogFooter>
           </FieldGroup>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button type="submit">Add Task</Button>
-          </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+        <DialogClose ref={closeRef} style={{ display: "none" }} />
+      </DialogContent>
     </Dialog>
   );
 }
