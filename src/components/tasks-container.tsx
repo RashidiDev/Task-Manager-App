@@ -1,10 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import AddTasksButton from "./addTasksButton";
 import Tasks from "./tasks";
 import TasksCategory from "./TasksCategory";
 
@@ -14,16 +8,7 @@ const TasksContainer = () => {
       <div className="mb-10 flex items-center justify-between">
         <TasksCategory />
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button>
-              <Plus />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Add task</p>
-          </TooltipContent>
-        </Tooltip>
+        <AddTasksButton />
       </div>
       <Tasks />
     </div>
