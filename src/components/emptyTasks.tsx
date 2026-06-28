@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/empty";
 import { Button } from "@/components/ui/button";
 import { StickyNoteX } from "lucide-react";
+import AddTaskDialog from "./addTaskDialog";
 
 function EmptyTasks() {
   return (
@@ -20,7 +21,9 @@ function EmptyTasks() {
         <EmptyDescription>No tasks found. create one now!</EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
-        <Button variant="secondary">Add task</Button>
+        <AddTaskDialog>
+          <Button variant="secondary">Add task</Button>
+        </AddTaskDialog>
       </EmptyContent>
     </Empty>
   );

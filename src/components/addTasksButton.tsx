@@ -5,14 +5,17 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import AddTaskDialog from "./addTaskDialog";
 
 function AddTasksButton() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button>
-          <Plus />
-        </Button>
+        <AddTaskDialog>
+          <Button>
+            <Plus />
+          </Button>
+        </AddTaskDialog>
       </TooltipTrigger>
       <TooltipContent>
         <p>Add task</p>
