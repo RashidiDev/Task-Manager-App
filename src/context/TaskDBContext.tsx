@@ -12,7 +12,7 @@ import { taskDB, type Task } from "@/db/indexedDB";
 
 export type newTask = {
   name: string;
-  description: string;
+  description: string | undefined;
   completed?: boolean;
   isImportant?: boolean;
 };
