@@ -5,7 +5,7 @@ import TaskComponent from "./task";
 const Tasks = () => {
   const tasksDb = useTaskDB();
   const tasks = tasksDb?.tasks;
-  if (!tasks) {
+  if (!tasks || tasks.length === 0) {
     return (
       <div>
         <EmptyTasks />
