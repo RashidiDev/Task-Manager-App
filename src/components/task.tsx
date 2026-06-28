@@ -48,7 +48,11 @@ const TaskComponent = ({ task }: TaskComponentProps) => {
       )}
 
       {/* Content area */}
-      <div className="flex-1 px-4 py-4">
+      <div
+        className={`flex-1 px-4 py-4 ${
+          task.description ? "" : "flex h-15 flex-col justify-center"
+        }`}
+      >
         <h3
           className={`text-base leading-tight font-semibold transition-all ${
             task.completed
