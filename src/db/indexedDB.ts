@@ -4,6 +4,7 @@ export interface Task {
   description: string | undefined;
   completed: boolean;
   isImportant: boolean;
+  createdAt: number;
 }
 
 const DB_NAME = "TaskManagerDB";

@@ -15,6 +15,7 @@ export type newTask = {
   description: string | undefined;
   completed?: boolean;
   isImportant?: boolean;
+  createdAt: number;
 };
 
 interface TaskDBContextValue {

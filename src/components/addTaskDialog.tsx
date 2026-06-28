@@ -26,13 +26,21 @@ function AddTaskDialog({ children }: { children: JSX.Element }) {
   function addTask(formData: FormData) {
     const name = formData.get("name")?.toString().trim();
     const description = formData.get("description")?.toString().trim();
-
+    const createdAt = Date.now();
     if (!name) {
       setError("Task name is required");
       return;
     }
 
-    tasksDb?.addTask({ name, description }).catch(() => {
+    const task = {
+      name,
+      description,
+      completed: false,
+      isImportant: false,
+      createdAt,
+    };
+
+    tasksDb?.addTask(task).catch(() => {
       setError("Failed to add task");
       return;
     });
