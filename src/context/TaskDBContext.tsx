@@ -74,7 +74,7 @@ export const TaskDBProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addTask = useCallback(
     async (task: newTask) => {
-      const taskToSave: Task = {
+      const taskToSave: newTask = {
         ...task,
         completed: false,
         isImportant: task.isImportant ?? false,

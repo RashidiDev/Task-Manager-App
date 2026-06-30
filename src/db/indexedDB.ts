@@ -1,3 +1,5 @@
+import type { newTask } from "@/context/TaskDBContext";
+
 export interface Task {
   id: number;
   name: string;
@@ -35,7 +37,7 @@ async function init(): Promise<void> {
   });
 }
 
-async function addTask(task: Task): Promise<number> {
+async function addTask(task: newTask): Promise<number> {
   if (!db) throw new Error("Database not initialized");
   return new Promise((resolve, reject) => {
     const transaction = db!.transaction(STORE_NAME, "readwrite");
